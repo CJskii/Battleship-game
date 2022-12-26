@@ -4,7 +4,7 @@ require("../src/ship.js");
 
 test("Ship object", () => {
   const ship = new Ship(3);
-  expect(ship).toEqual({ length: 3, hits: [], sunk: false });
+  expect(ship).toEqual({ length: 3, hits: [], sunk: false, index: [] });
 });
 
 test("Ship length", () => {

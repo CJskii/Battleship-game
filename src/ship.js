@@ -3,6 +3,7 @@ class Ship {
     this.length = length;
     this.hits = [];
     this.sunk = this._isSunk();
+    this.index = [];
   }
 
   _isSunk(length = this.length, hits = this.hits) {
