@@ -4,6 +4,7 @@ class Ship {
     this.hits = [];
     this.sunk = this._isSunk();
     this.index = [];
+    // axis from DOM
   }
 
   _isSunk(length = this.length, hits = this.hits) {
@@ -12,7 +13,12 @@ class Ship {
   }
 
   hit(index) {
-    this.hits.push(index);
+    const arrLookup = this.hits.filter((coords) => {
+      return coords[0] == index[0] && coords[1] == index[1];
+    });
+    if (arrLookup.length == 0) {
+      this.hits.push(index);
+    }
     this.sunk = this._isSunk();
     return this.hits;
   }

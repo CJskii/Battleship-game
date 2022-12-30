@@ -18,7 +18,7 @@ test("Ship hit 1", () => {
 });
 
 //skipped
-test.skip("Ship hit 2", () => {
+test("Ship hit 2", () => {
   const ship = new Ship(5);
   ship.hit(2);
   expect(ship.hit(2)).toStrictEqual((ship.hits = [2]));
@@ -31,7 +31,7 @@ test("Is sunk = false", () => {
 
 test("Is sunk = true", () => {
   const ship = new Ship(2);
-  ship.hit(1);
-  ship.hit(2);
+  ship.hit([1, 2]);
+  ship.hit([2, 2]);
   expect(ship.sunk).toBe(true);
 });
