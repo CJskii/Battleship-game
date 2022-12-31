@@ -1,6 +1,6 @@
 class Gameboard {
-  constructor(size) {
-    this.size = size;
+  constructor() {
+    this.size = 10;
     this.board = this._createBoard(this.size);
     this.missed = [];
     this.ships = [];
@@ -27,6 +27,14 @@ class Gameboard {
     }
   }
 
+  _isMissedAttack(x, y) {
+    if (this.board[x][y] === 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   placeShip(ship, x, y) {
     // check for axis from DOM
     this.ships.push(ship);
@@ -40,7 +48,8 @@ class Gameboard {
 
   receiveAttack(x, y) {
     const ship = this.board[x][y];
-    if (ship != 0) {
+    const missedAttack = this._isMissedAttack(x, y);
+    if (ship != 0 && missedAttack === false) {
       ship.hit([x, y]);
     } else {
       // check for duplicates
