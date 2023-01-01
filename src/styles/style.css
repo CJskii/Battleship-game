@@ -1,3 +1,45 @@
+:root {
+  --color-1: #1f75fe;
+  --color-1-dark: #004488;
+  --color-2: #a2bff2;
+  --color-3: #e6e6e6;
+  --color-4: #f97306;
+  --color-5: #c6b1d6;
+  --color-6: #c6d8af;
+  font-size: 48px;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 body {
-  background-color: black;
+  background-color: var(--color-1-dark);
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  width: 90vw;
+  height: 100vh;
+}
+
+.game-title {
+  color: var(--color-4);
+  text-align: center;
+}
+
+.btn {
+  background-color: white;
+}
+
+.boards-container {
+  width: 100%;
+  height: 80%;
+  border: 1px solid white;
 }
