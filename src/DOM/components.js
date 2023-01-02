@@ -5,7 +5,7 @@ class Components {
     this.body = body;
     this.background = this._background(body);
     this.header = this._header();
-    //this.boards = this._boards();
+    this.boards = this._boards();
     this.form = this._nameForm();
     this.footer = this._footer();
   }
@@ -31,6 +31,7 @@ class Components {
     // Create boards wrapper element
     const boards = document.createElement("div");
     boards.classList.add("boards-container");
+    boards.style.display = "none";
     background.append(boards);
     return boards;
   }
@@ -76,10 +77,36 @@ class Components {
       input.placeholder = "You must enter name";
       e.preventDefault();
     } else {
-      gameController(input.value);
+      const boards = this.boards;
+      // call to index.js
+      gameController(input.value, this);
       form.remove();
+      boards.style.display = "";
     }
     return input.value;
+  }
+
+  renderBoard$(board, container) {
+    const playerBoard = document.createElement("div");
+    playerBoard.classList.add("player-board");
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board.length; j++) {
+        const square = document.createElement("div");
+        square.classList.add(`${i}`);
+        square.classList.add(`${j}`);
+        square.classList.add("square");
+        playerBoard.append(square);
+      }
+    }
+    container.append(playerBoard);
+    return playerBoard;
+  }
+
+  playerHeader$(boards, name) {
+    const header = document.createElement("h6");
+    header.textContent = `Captain ${name}, please place your ships`;
+    boards.append(header);
+    return header;
   }
 }
 

@@ -7,9 +7,12 @@ import Player from "./player";
   const game = new Components(body);
 })();
 
-function gameController(name) {
+function gameController(name, components) {
   const player = new Player(name);
-  const board = player.board.board;
+  const playerBoard = player.board.board;
+  components.playerHeader$(components.boards, player.name);
+  // button for X/Y axis
+  components.renderBoard$(playerBoard, components.boards);
   console.log("I can start the game now");
 }
 
