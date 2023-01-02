@@ -1,3 +1,5 @@
+import gameController from "../index.js";
+
 class Components {
   constructor(body) {
     this.body = body;
@@ -54,6 +56,7 @@ class Components {
   }
 
   _footer(background = this.background) {
+    // Create footer element
     const footer = document.createElement("div");
     const paragraph = document.createElement("p");
     const anchor = document.createElement("a");
@@ -69,8 +72,14 @@ class Components {
   }
 
   #submitBtn(e, input, form = this.form) {
-    console.log(input.value);
-    form.remove();
+    if (input.value == "") {
+      input.placeholder = "You must enter name";
+      e.preventDefault();
+    } else {
+      gameController(input.value);
+      form.remove();
+    }
+    return input.value;
   }
 }
 
