@@ -7,13 +7,24 @@ import Player from "./player";
   const game = new Components(body);
 })();
 
-function gameController(name, components) {
-  const player = new Player(name);
-  const playerBoard = player.board.board;
-  components.playerHeader$(components.boards, player.name);
-  // button for X/Y axis
-  components.renderBoard$(playerBoard, components.boards);
-  console.log("I can start the game now");
+class Game {
+  constructor(player1, components) {
+    this.player1 = new Player(player1);
+    this.player2 = new Player("Computer");
+    this.components = components;
+    this.loaded = this._init();
+  }
+
+  _init(components = this.components) {
+    console.log({
+      Player1: this.player1,
+      Player2: this.player2,
+      components: this.components,
+    });
+    components._renderHeader(this.player1);
+    components._axisButton();
+    components._renderBoard(this.player1);
+  }
 }
 
-export default gameController;
+export default Game;
