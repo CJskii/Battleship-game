@@ -51,6 +51,10 @@ body {
   padding-top: 0.1rem;
 }
 
+.captain-header {
+  text-align: center;
+}
+
 /* BUTTONS */
 
 .btn {
@@ -114,12 +118,15 @@ input::placeholder {
   border: 1px solid red;
   display: grid;
   justify-items: center;
+  align-items: center;
+  row-gap: 10px;
 }
 
 .player-board {
   display: grid;
   grid-template-columns: repeat(10, 25px);
   grid-template-rows: repeat(10, 25px);
+  gap: 3px;
 }
 
 .square {

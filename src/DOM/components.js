@@ -1,4 +1,4 @@
-import gameController from "../index.js";
+import Game from "../index.js";
 
 class Components {
   constructor(body) {
@@ -72,41 +72,61 @@ class Components {
     return footer;
   }
 
-  #submitBtn(e, input, form = this.form) {
+  _renderHeader(player) {
+    const header = document.createElement("h6");
+    header.classList.add("captain-header");
+    header.textContent = `Captain ${player.name}, please place your ships`;
+    this.boards.append(header);
+    return header;
+  }
+
+  _axisButton() {
+    const btn = document.createElement("button");
+    btn.textContent = "Axis: X";
+    btn.classList.add("btn");
+    btn.addEventListener("click", (e) => this.#axisBtn(e, btn));
+    this.boards.append(btn);
+    return btn;
+  }
+
+  _renderBoard(player) {
+    const playerBoard = document.createElement("div");
+    playerBoard.classList.add("player-board");
+    for (let i = 0; i < player.board.size; i++) {
+      for (let j = 0; j < player.board.size; j++) {
+        const square = document.createElement("div");
+        square.classList.add(`x${i}y${j}`);
+        square.classList.add("square");
+        playerBoard.append(square);
+      }
+    }
+    this.boards.append(playerBoard);
+    return playerBoard;
+  }
+
+  // Listeners
+
+  #submitBtn(e, input, form = this.form, boards = this.boards) {
     if (input.value == "") {
       input.placeholder = "You must enter name";
       e.preventDefault();
+      console.log(e);
     } else {
-      const boards = this.boards;
       // call to index.js
-      gameController(input.value, this);
+      new Game(input.value, this);
       form.remove();
       boards.style.display = "";
     }
     return input.value;
   }
 
-  renderBoard$(board, container) {
-    const playerBoard = document.createElement("div");
-    playerBoard.classList.add("player-board");
-    for (let i = 0; i < board.length; i++) {
-      for (let j = 0; j < board.length; j++) {
-        const square = document.createElement("div");
-        square.classList.add(`${i}`);
-        square.classList.add(`${j}`);
-        square.classList.add("square");
-        playerBoard.append(square);
-      }
+  #axisBtn(e, btn) {
+    const text = btn.textContent;
+    if (text == "Axis: X") {
+      btn.textContent = "Axis: Y";
+    } else {
+      btn.textContent = "Axis: X";
     }
-    container.append(playerBoard);
-    return playerBoard;
-  }
-
-  playerHeader$(boards, name) {
-    const header = document.createElement("h6");
-    header.textContent = `Captain ${name}, please place your ships`;
-    boards.append(header);
-    return header;
   }
 }
 
