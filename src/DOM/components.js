@@ -95,13 +95,35 @@ class Components {
     for (let i = 0; i < player.board.size; i++) {
       for (let j = 0; j < player.board.size; j++) {
         const square = document.createElement("div");
-        square.classList.add(`x${i}y${j}`);
+        square.classList.add(`x${j}y${i}`);
         square.classList.add("square");
+        square.classList.add("not-allowed");
+        square.addEventListener("mouseover", (e) => this.#squareHoover(e));
+        square.addEventListener("mouseout", (e) => this.#squareMouseOut(e));
+        square.addEventListener("click", (e) => this.#squareClick(e));
         playerBoard.append(square);
       }
     }
     this.boards.append(playerBoard);
     return playerBoard;
+  }
+
+  _findSquares(index, length, axis) {
+    const squares = [];
+    for (let i = 0; i < length; i++) {
+      if (axis == "X") {
+        const x = Number(index.x) + i;
+        const square = document.querySelector(`.x${x}y${index.y}`);
+        squares.push(square);
+      } else if (axis == "Y") {
+        const y = Number(index.y) + i;
+        const square = document.querySelector(`.x${index.x}y${y}`);
+        if (square) {
+          squares.push(square);
+        } else return false;
+      }
+    }
+    return squares;
   }
 
   // Listeners
@@ -128,6 +150,40 @@ class Components {
       btn.textContent = "Axis: X";
     }
   }
+
+  #squareHoover(e) {
+    const length = 5;
+    const axis = "Y";
+    let index = e.target.classList[0];
+    index = { x: index[1], y: index[3] };
+    const squares = this._findSquares(index, length, axis);
+    if (squares === false) {
+      e.target.classList.add("red");
+    } else {
+      squares.forEach((square) => {
+        square.classList.remove("not-allowed");
+        square.classList.add("allowed");
+      });
+    }
+  }
+
+  #squareMouseOut(e) {
+    const length = 5;
+    const axis = "Y";
+    let index = e.target.classList[0];
+    index = { x: index[1], y: index[3] };
+    const squares = this._findSquares(index, length, axis);
+    if (squares === false) {
+      e.target.classList.remove("red");
+    } else {
+      squares.forEach((square) => {
+        square.classList.remove("allowed");
+        square.classList.add("not-allowed");
+      });
+    }
+  }
+
+  #squareClick(e) {}
 }
 
 export default Components;
