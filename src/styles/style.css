@@ -135,6 +135,24 @@ input::placeholder {
   border: 1px solid white;
 }
 
+.not-allowed {
+  cursor: not-allowed;
+}
+
+.allowed {
+  cursor: pointer;
+  background-color: rgba(153, 205, 50, 0.5);
+}
+
+.red {
+  background-color: rgba(255, 0, 0, 0.7);
+}
+
+.ship {
+  background-color: yellow;
+  cursor: no-drop;
+}
+
 /* FOOTER */
 
 .footer {
