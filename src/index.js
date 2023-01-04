@@ -21,9 +21,9 @@ class Game {
       Player2: this.player2,
       components: this.components,
     });
-    components._renderHeader(this.player1);
+    components.header._render(this.player1);
     components._axisButton();
-    components._renderBoard(this.player1);
+    components.boards._render(this.player1);
   }
 }
 
