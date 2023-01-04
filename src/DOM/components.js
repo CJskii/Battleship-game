@@ -8,6 +8,8 @@ class Components {
     this.boards = this._boards();
     this.form = this._nameForm();
     this.footer = this._footer();
+    this.game;
+    this.axis;
   }
 
   _background(body) {
@@ -86,6 +88,7 @@ class Components {
     btn.classList.add("btn");
     btn.addEventListener("click", (e) => this.#axisBtn(e, btn));
     this.boards.append(btn);
+    this.axis = btn;
     return btn;
   }
 
@@ -114,7 +117,9 @@ class Components {
       if (axis == "X") {
         const x = Number(index.x) + i;
         const square = document.querySelector(`.x${x}y${index.y}`);
-        squares.push(square);
+        if (square) {
+          squares.push(square);
+        } else return false;
       } else if (axis == "Y") {
         const y = Number(index.y) + i;
         const square = document.querySelector(`.x${index.x}y${y}`);
@@ -126,6 +131,29 @@ class Components {
     return squares;
   }
 
+  _retrieveAxis() {
+    const btn = this.axis;
+    let axis = btn.textContent[6];
+    return axis;
+  }
+
+  _retrieveLength() {
+    const ship = this.game.player1.ships[0];
+    return ship.length;
+  }
+
+  _index(string) {
+    string = { x: string[1], y: string[3] };
+    return string;
+  }
+
+  _shipPlaced(index, axis, length) {
+    const squares = this._findSquares(index, length, axis);
+    squares.forEach((square) => {
+      square.classList.add("ship");
+    });
+  }
+
   // Listeners
 
   #submitBtn(e, input, form = this.form, boards = this.boards) {
@@ -135,7 +163,7 @@ class Components {
       console.log(e);
     } else {
       // call to index.js
-      new Game(input.value, this);
+      this.game = new Game(input.value, this);
       form.remove();
       boards.style.display = "";
     }
@@ -152,10 +180,9 @@ class Components {
   }
 
   #squareHoover(e) {
-    const length = 5;
-    const axis = "Y";
-    let index = e.target.classList[0];
-    index = { x: index[1], y: index[3] };
+    const length = this._retrieveLength();
+    const axis = this._retrieveAxis();
+    let index = this._index(e.target.classList[0]);
     const squares = this._findSquares(index, length, axis);
     if (squares === false) {
       e.target.classList.add("red");
@@ -168,10 +195,9 @@ class Components {
   }
 
   #squareMouseOut(e) {
-    const length = 5;
-    const axis = "Y";
-    let index = e.target.classList[0];
-    index = { x: index[1], y: index[3] };
+    const length = this._retrieveLength();
+    const axis = this._retrieveAxis();
+    let index = this._index(e.target.classList[0]);
     const squares = this._findSquares(index, length, axis);
     if (squares === false) {
       e.target.classList.remove("red");
@@ -183,7 +209,16 @@ class Components {
     }
   }
 
-  #squareClick(e) {}
+  #squareClick(e) {
+    const ships = this.game.player1.ships;
+    const index = this._index(e.target.classList[0]);
+    const ship = ships.shift();
+    this.game.player1.board.placeShip(ship, index.x, index.y);
+    this._shipPlaced(index, this._retrieveAxis(), ship.length);
+    console.log(this.game.player1.board);
+    // check if ships is empty
+    // if ships are empty - turn should start
+  }
 }
 
 export default Components;

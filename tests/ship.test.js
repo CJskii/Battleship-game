@@ -4,7 +4,12 @@ require("../src/ship.js");
 
 test("Ship object", () => {
   const ship = new Ship(3);
-  expect(ship).toEqual({ length: 3, hits: [], sunk: false, index: [] });
+  expect(ship).toEqual({
+    length: 3,
+    hits: [],
+    sunk: false,
+    index: [],
+  });
 });
 
 test("Ship length", () => {
@@ -17,7 +22,6 @@ test("Ship hit 1", () => {
   expect(ship.hit(2)).toStrictEqual((ship.hits = [2]));
 });
 
-//skipped
 test("Ship hit 2", () => {
   const ship = new Ship(5);
   ship.hit(2);

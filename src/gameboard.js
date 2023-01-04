@@ -38,10 +38,11 @@ class Gameboard {
   placeShip(ship, x, y) {
     // check for axis from DOM
     this.ships.push(ship);
+    ship.onboard = true;
     for (let i = 0; i < ship.length; i++) {
-      if (x + ship.length < this.size) {
-        ship.index.push([x + i, y]);
-        this.board[x + i][y] = ship;
+      if (Number(x) + ship.length < this.size) {
+        ship.index.push([Number(x) + i, y]);
+        this.board[Number(x) + i][y] = ship;
       } else return;
     }
   }
