@@ -1,6 +1,6 @@
 import "./styles/style.css";
 import Components from "./DOM/components.js";
-import Player from "./player";
+import Player from "./objects/player";
 
 (function () {
   const body = document.body;
