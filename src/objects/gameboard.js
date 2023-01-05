@@ -41,7 +41,7 @@ class Gameboard {
     ship.onboard = true;
     for (let i = 0; i < ship.length; i++) {
       if (Number(x) + ship.length < this.size) {
-        ship.index.push([Number(x) + i, y]);
+        ship.index.push([Number(x) + i, Number(y)]);
         this.board[Number(x) + i][y] = ship;
       } else return;
     }

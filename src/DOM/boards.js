@@ -77,17 +77,18 @@ class Boards {
   }
 
   #squareClick(e, components = this.components) {
+    if (e.target.classList.contains("ship")) return;
     const ships = components.game.player1.ships;
     const index = components._index(e.target.classList[0]);
     const ship = ships.shift();
     components.game.player1.board.placeShip(ship, index.x, index.y);
     this._shipPlaced(index, components._retrieveAxis(), ship.length);
-    // check if ships is empty
     // if ships are empty - turn should start
     if (ships.length === 0) {
       console.log("restart UI and start the turn");
       this._clear();
       // initiate rendering of both player boards
+      components.game.start();
     }
   }
 }

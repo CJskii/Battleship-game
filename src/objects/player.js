@@ -17,6 +17,14 @@ class Player {
   move(x, y) {
     this.board.receiveAttack(x, y);
   }
+
+  init(string) {
+    if (!string) {
+      console.log("render player 1");
+    } else {
+      console.log("render player 2");
+    }
+  }
 }
 
 export default Player;

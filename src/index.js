@@ -25,6 +25,16 @@ class Game {
     components._axisButton();
     components.boards._render(this.player1);
   }
+
+  start(player1 = this.player1, player2 = this.player2) {
+    console.log({
+      Player1: this.player1,
+      Player2: this.player2,
+      components: this.components,
+    });
+    player1.init();
+    player2.init(player2);
+  }
 }
 
 export default Game;
