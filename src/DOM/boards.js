@@ -77,7 +77,11 @@ class Boards {
   }
 
   #squareClick(e, components = this.components) {
-    if (e.target.classList.contains("ship")) return;
+    if (
+      e.target.classList.contains("ship") ||
+      e.target.classList.contains("not-allowed")
+    )
+      return;
     const ships = components.game.player1.ships;
     const index = components._index(e.target.classList[0]);
     const ship = ships.shift();
