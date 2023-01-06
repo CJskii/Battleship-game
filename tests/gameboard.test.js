@@ -1,5 +1,5 @@
-import Gameboard from "../src/gameboard.js";
-import Ship from "../src/ship.js";
+import Gameboard from "../src/objects/gameboard";
+import Ship from "../src/objects/ship";
 
 test("Board  X", () => {
   const board = new Gameboard();
@@ -16,7 +16,7 @@ test("Board  Y", () => {
 test("Place ship 1", () => {
   const ship = new Ship(1);
   const board = new Gameboard();
-  board.placeShip(ship, 2, 2);
+  board.placeShip(ship, 2, 2, "X", "X");
   expect(board.board[2][2]).toEqual({
     hits: [],
     length: 1,
@@ -28,7 +28,7 @@ test("Place ship 1", () => {
 test("Place ship 2", () => {
   const ship = new Ship(2);
   const board = new Gameboard();
-  board.placeShip(ship, 1, 1);
+  board.placeShip(ship, 1, 1, "X", "X");
   expect(board.board[1][1]).toEqual({
     hits: [],
     length: 2,
@@ -43,7 +43,7 @@ test("Place ship 2", () => {
 test("Place ship 3", () => {
   const ship = new Ship(4);
   const board = new Gameboard();
-  board.placeShip(ship, 3, 3);
+  board.placeShip(ship, 3, 3, "X", "X");
   expect(board.board[3][3]).toEqual({
     hits: [],
     length: 4,
@@ -60,14 +60,14 @@ test("Place ship 3", () => {
 test("Place ship exceeding board", () => {
   const ship = new Ship(5);
   const board = new Gameboard();
-  board.placeShip(ship, 5, 5);
+  board.placeShip(ship, 5, 5, "X");
   expect(board.board[5][5]).toEqual(0);
 });
 
 test("Receive attack 1", () => {
   const ship = new Ship(2);
   const board = new Gameboard();
-  board.placeShip(ship, 2, 2);
+  board.placeShip(ship, 2, 2, "X");
   board.receiveAttack(2, 2);
   expect(ship.hits).toEqual([[2, 2]]);
 });
@@ -75,7 +75,7 @@ test("Receive attack 1", () => {
 test("Receive attack 2", () => {
   const ship = new Ship(4);
   const board = new Gameboard();
-  board.placeShip(ship, 2, 2);
+  board.placeShip(ship, 2, 2, "X");
   board.receiveAttack(2, 2);
   board.receiveAttack(3, 2);
   board.receiveAttack(4, 2);
@@ -91,7 +91,7 @@ test("Receive attack 2", () => {
 test("Receive attack 3", () => {
   const ship = new Ship(2);
   const board = new Gameboard();
-  board.placeShip(ship, 2, 2);
+  board.placeShip(ship, 2, 2, "X");
   board.receiveAttack(2, 2);
   board.receiveAttack(2, 2);
   expect(ship.hits).toEqual([[2, 2]]);
@@ -100,7 +100,7 @@ test("Receive attack 3", () => {
 test("Is sunk?", () => {
   const ship = new Ship(2);
   const board = new Gameboard();
-  board.placeShip(ship, 2, 2);
+  board.placeShip(ship, 2, 2, "X");
   board.receiveAttack(2, 2);
   board.receiveAttack(3, 2);
   expect(ship.sunk).toBe(true);
@@ -122,7 +122,7 @@ test("Missed attack 2", () => {
 test("Missed attack 3", () => {
   const board = new Gameboard();
   const ship = new Ship(2);
-  board.placeShip(ship, 2, 2);
+  board.placeShip(ship, 2, 2, "X");
   board.receiveAttack(3, 3);
   expect(board._isMissedAttack(3, 3)).toBe(true);
 });
@@ -130,7 +130,7 @@ test("Missed attack 3", () => {
 test("All ships sunk? 1", () => {
   const ship = new Ship(2);
   const board = new Gameboard();
-  board.placeShip(ship, 2, 2);
+  board.placeShip(ship, 2, 2, "X");
   board.receiveAttack(2, 2);
   board.receiveAttack(3, 2);
   expect(board._areShipsSunk()).toBe(true);
@@ -140,9 +140,24 @@ test("All ships sunk? 1", () => {
   const ship = new Ship(2);
   const ship2 = new Ship(4);
   const board = new Gameboard();
-  board.placeShip(ship, 2, 2);
-  board.placeShip(ship2, 2, 4);
+  board.placeShip(ship, 2, 2, "X");
+  board.placeShip(ship2, 2, 4, "X");
   board.receiveAttack(2, 2);
   board.receiveAttack(3, 2);
   expect(board._areShipsSunk()).toBe(false);
+});
+
+test("Place ship: Axis Y", () => {
+  const ship = new Ship(2);
+  const board = new Gameboard();
+  board.placeShip(ship, 1, 1, "Y");
+  expect(board.board[1][1]).toEqual({
+    hits: [],
+    length: 2,
+    sunk: false,
+    index: [
+      [1, 1],
+      [1, 2],
+    ],
+  });
 });

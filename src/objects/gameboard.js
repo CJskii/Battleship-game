@@ -35,15 +35,21 @@ class Gameboard {
     }
   }
 
-  placeShip(ship, x, y) {
+  placeShip(ship, x, y, axis) {
     // check for axis from DOM
     this.ships.push(ship);
-    ship.onboard = true;
-    for (let i = 0; i < ship.length; i++) {
-      if (Number(x) + ship.length < this.size) {
-        ship.index.push([Number(x) + i, Number(y)]);
-        this.board[Number(x) + i][y] = ship;
-      } else return;
+    x = Number(x);
+    y = Number(y);
+    if (axis == "X") {
+      for (let i = 0; i < ship.length; i++) {
+        ship.index.push([x + i, y]);
+        this.board[x + i][y] = ship;
+      }
+    } else if (axis == "Y") {
+      for (let i = 0; i < ship.length; i++) {
+        ship.index.push([x, y + i]);
+        this.board[x][y + i] = ship;
+      }
     }
   }
 

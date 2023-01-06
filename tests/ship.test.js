@@ -1,6 +1,4 @@
-import Ship from "../src/ship";
-
-require("../src/ship.js");
+import Ship from "../src/objects/ship";
 
 test("Ship object", () => {
   const ship = new Ship(3);

@@ -22,6 +22,8 @@ class Random {
       this.placeShipRandom(ship, axis);
     } else {
       console.log({ isValidMove, index, axis, ship });
+      // place ships here
+      this.player.board.placeShip(ship, x, y, axis);
       this.init();
     }
   }

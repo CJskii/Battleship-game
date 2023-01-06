@@ -81,8 +81,9 @@ class Boards {
     const ships = components.game.player1.ships;
     const index = components._index(e.target.classList[0]);
     const ship = ships.shift();
-    components.game.player1.board.placeShip(ship, index.x, index.y);
-    this._shipPlaced(index, components._retrieveAxis(), ship.length);
+    const axis = components._retrieveAxis();
+    components.game.player1.board.placeShip(ship, index.x, index.y, axis);
+    this._shipPlaced(index, axis, ship.length);
     // if ships are empty - turn should start
     if (ships.length === 0) {
       console.log("restart UI and start the turn");
