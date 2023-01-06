@@ -1,6 +1,7 @@
 import "./styles/style.css";
 import Components from "./DOM/components.js";
 import Player from "./objects/player";
+import Random from "./objects/random";
 
 (function () {
   const body = document.body;
@@ -11,6 +12,9 @@ class Game {
   constructor(player1, components) {
     this.player1 = new Player(player1);
     this.player2 = new Player("Computer");
+    this.board1 = this.player1.board;
+    this.board2 = this.player2.board;
+    this.computer = new Random(this.player2);
     this.components = components;
     this.loaded = this._init();
   }
