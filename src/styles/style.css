@@ -153,6 +153,17 @@ input::placeholder {
   cursor: no-drop;
 }
 
+.player-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-name {
+  padding-bottom: 0.3rem;
+}
+
 /* FOOTER */
 
 .footer {

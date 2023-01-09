@@ -2,6 +2,7 @@ import "./styles/style.css";
 import Components from "./DOM/components.js";
 import Player from "./objects/player";
 import Random from "./objects/random";
+import Turn from "./DOM/turn";
 
 (function () {
   const body = document.body;
@@ -30,14 +31,13 @@ class Game {
     components.boards._render(this.player1);
   }
 
-  start(player1 = this.player1, player2 = this.player2) {
+  start(background = this.components.boards) {
     console.log({
       Player1: this.player1,
       Player2: this.player2,
       components: this.components,
     });
-    player1.init();
-    player2.init(player2);
+    new Turn(this, background);
   }
 }
 
