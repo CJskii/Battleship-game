@@ -44,11 +44,13 @@ class Gameboard {
       for (let i = 0; i < ship.length; i++) {
         ship.index.push([x + i, y]);
         this.board[x + i][y] = ship;
+        ship.axis = axis;
       }
     } else if (axis == "Y") {
       for (let i = 0; i < ship.length; i++) {
         ship.index.push([x, y + i]);
         this.board[x][y + i] = ship;
+        ship.axis = axis;
       }
     }
   }

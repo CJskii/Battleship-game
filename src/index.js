@@ -21,11 +21,6 @@ class Game {
   }
 
   _init(components = this.components) {
-    console.log({
-      Player1: this.player1,
-      Player2: this.player2,
-      components: this.components,
-    });
     components.header._render(this.player1);
     components._axisButton();
     components.boards._render(this.player1);
@@ -38,6 +33,7 @@ class Game {
       components: this.components,
     });
     new Turn(this, background);
+    console.log(this.board1);
   }
 }
 
