@@ -35,31 +35,57 @@ class Game {
     this.components.play = new Turn(this, background);
   }
 
-  turn(board, index, game = this.components.play) {
+  turn(board, index, game = this.components.play, computer = this.computer) {
     if (board === "Player") {
       console.log("Do computer stuff");
-      const hit = this.player1.move(index.x, index.y);
-      game._hitORmiss(index, hit, board);
+      this.computerTurn(board, index, game, computer);
       const allShipsSunk = this.board1._areShipsSunk();
-      console.log(this.player1);
       if (allShipsSunk === true) {
-        // print winner
-        // you lost
-        console.log("You lost");
+        this.printWinner(board);
       }
     } else if (board === "Computer") {
       console.log("Do player stuff");
       const hit = this.player2.move(index.x, index.y);
       game._hitORmiss(index, hit, board);
       const allShipsSunk = this.board2._areShipsSunk();
-      console.log(this.board2);
       if (allShipsSunk === true) {
-        // print winner
-        // player
-        console.log("Player has won");
+        this.printWinner(board);
+      } else {
+        this.turn("Player", index);
       }
     }
-    // check for the winner
+  }
+
+  computerTurn(board, index, game, computer) {
+    // fix selecting the same coords twice
+    index = computer.randomCoords();
+    const validMove = computer.isValidMove(index, this.board1.board);
+    console.log({ validMove, index });
+    if (validMove === true) {
+      const hit = this.player1.move(index.x, index.y);
+      game._hitORmiss(index, hit, board);
+      console.log("hit");
+    } else {
+      this.computerTurn(board, index, game, computer);
+      //console.log(validMove)
+    }
+
+    //console.log({ board, hit });
+    // if computer hits boat
+    // make it select coords next to last hit
+    //computer.lastHit(hit, index);
+  }
+
+  printWinner(string, game = this.components.play) {
+    game.header.textContent = this.evaluateWinner(string);
+  }
+
+  evaluateWinner(string) {
+    if (string == "Player") {
+      return "You have lost, try again!";
+    } else {
+      return `${this.player1.name} has won!`;
+    }
   }
 }
 

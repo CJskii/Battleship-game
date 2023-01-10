@@ -85,7 +85,8 @@ class Turn {
   }
 
   _hitORmiss(index, target, board) {
-    if (target == "miss") {
+    if (target == undefined) return;
+    else if (target == "miss") {
       board = this._findSquare(index, board);
       this._missColor(board);
       // color
@@ -120,8 +121,7 @@ class Turn {
     const board = e.path[1];
     const string = e.target.classList[0];
     const index = game.components._index(string);
-    if (board.classList.contains("miss") || board.classList.contains("hit"))
-      return;
+    if (board.classList.contains("not-allowed")) return;
     else if (board.classList.contains("Computer")) {
       game.turn("Computer", index);
     } else {

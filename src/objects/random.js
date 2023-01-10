@@ -2,6 +2,7 @@ class Random {
   constructor(player) {
     this.player = player;
     this.init = this.init();
+    this.lastHit;
   }
 
   init(player = this.player) {
@@ -71,6 +72,44 @@ class Random {
       return "X";
     } else {
       return "Y";
+    }
+  }
+
+  adjacentMove(lastHit) {
+    let moves = [
+      [1, 0],
+      [0, 1],
+      [-1, 0],
+      [0, -1],
+    ];
+    const x = Number(lastHit.x);
+    const y = Number(lastHit.y);
+
+    for (let i = 0; i < moves.length; i++) {
+      // check if move is valid
+
+      let nextMove = { x: x + moves[0], y: y + moves[1] };
+      const valid = this.isValidMove(nextMove);
+
+      if (valid === true) {
+        // hit
+      }
+    }
+  }
+
+  isValidMove(index, board) {
+    const move = board[index.x][index.y];
+    const arr = [];
+    if (move == "0") return true;
+    else if (typeof move === "object") {
+      move.hits.forEach((hit) => {
+        if (hit[0] == index.x && hit[1] == index.y) {
+          arr.push(false);
+        }
+      });
+      if (arr.length == 0) {
+        return true;
+      }
     }
   }
 }
