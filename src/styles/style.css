@@ -164,6 +164,23 @@ input::placeholder {
   padding-bottom: 0.3rem;
 }
 
+.target {
+  cursor: crosshair;
+}
+
+.target:hover {
+  background-color: var(--color-1);
+}
+
+.hit {
+  background-color: red;
+  border-radius: 50px;
+}
+
+.miss {
+  background-color: grey;
+}
+
 /* FOOTER */
 
 .footer {

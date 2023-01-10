@@ -60,6 +60,7 @@ class Gameboard {
     const missedAttack = this._isMissedAttack(x, y);
     if (ship != 0 && missedAttack === false) {
       ship.hit([x, y]);
+      return "hit";
     } else {
       // check for duplicates
       const arrLookup = this.missed.filter((coords) => {
@@ -71,7 +72,8 @@ class Gameboard {
       }
       // if no duplicates push to missed array
       else {
-        return this.missed.push([x, y]); // push missed cords to miss array
+        this.missed.push([x, y]); // push missed cords to miss array
+        return "miss";
       }
     }
   }

@@ -13,6 +13,7 @@ class Components {
     this.footer = new Footer(this.background);
     this.game;
     this.axis;
+    this.play;
   }
 
   _background(body) {

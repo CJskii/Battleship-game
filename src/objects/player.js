@@ -15,7 +15,7 @@ class Player {
   }
 
   move(x, y) {
-    this.board.receiveAttack(x, y);
+    return this.board.receiveAttack(x, y);
   }
 
   init(string) {
