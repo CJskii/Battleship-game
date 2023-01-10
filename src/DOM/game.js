@@ -41,10 +41,8 @@ class Turn {
         const square = document.createElement("div");
         square.classList.add(`x${j}y${i}`);
         square.classList.add("square");
-        // square.classList.add("not-allowed");
-        // square.addEventListener("mouseover", (e) => this.#squareHoover(e));
-        // square.addEventListener("mouseout", (e) => this.#squareMouseOut(e));
-        // square.addEventListener("click", (e) => this.#squareClick(e));
+        square.classList.add("target");
+        square.addEventListener("click", (e) => this.#squareClick(e));
         playerBoard.append(square);
       }
     }
@@ -54,17 +52,16 @@ class Turn {
   }
 
   _renderShips(board, ships) {
-    if (ships.length == 0) return;
-    const ship = ships.shift();
-    const axis = ship.axis;
-    const length = ship.length;
-    let index = ship.index[0];
-    index = { x: index[0], y: index[1] };
-    const squares = this._findSquares(index, length, axis, board);
-    squares.forEach((square) => {
-      square.classList.add("ship");
+    ships.forEach((ship) => {
+      const axis = ship.axis;
+      const length = ship.length;
+      let index = ship.index[0];
+      index = { x: index[0], y: index[1] };
+      const squares = this._findSquares(index, length, axis, board);
+      squares.forEach((square) => {
+        square.classList.add("ship");
+      });
     });
-    this._renderShips(board, ships);
   }
 
   _findSquares(index, length, axis, board) {
@@ -85,6 +82,51 @@ class Turn {
       }
     }
     return squares;
+  }
+
+  _hitORmiss(index, target, board) {
+    if (target == "miss") {
+      board = this._findSquare(index, board);
+      this._missColor(board);
+      // color
+    } else if (target == "hit") {
+      board = this._findSquare(index, board);
+      this._hitColor(board);
+      // color
+    }
+    board.classList.remove("target");
+    board.classList.add("not-allowed");
+  }
+
+  _findSquare(index, board) {
+    if (board == "Player") {
+      board = this.board1;
+    } else if (board == "Computer") {
+      board = this.board2;
+    }
+    const square = board.querySelector(`.x${index.x}y${index.y}`);
+    return square;
+  }
+
+  _missColor(square) {
+    square.classList.add("miss");
+  }
+
+  _hitColor(square) {
+    square.classList.add("hit");
+  }
+
+  #squareClick(e, game = this.game) {
+    const board = e.path[1];
+    const string = e.target.classList[0];
+    const index = game.components._index(string);
+    if (board.classList.contains("miss") || board.classList.contains("hit"))
+      return;
+    else if (board.classList.contains("Computer")) {
+      game.turn("Computer", index);
+    } else {
+      game.turn("Player", index);
+    }
   }
 }
 

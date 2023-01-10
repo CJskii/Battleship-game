@@ -2,7 +2,7 @@ import "./styles/style.css";
 import Components from "./DOM/components.js";
 import Player from "./objects/player";
 import Random from "./objects/random";
-import Turn from "./DOM/turn";
+import Turn from "./DOM/game";
 
 (function () {
   const body = document.body;
@@ -32,8 +32,34 @@ class Game {
       Player2: this.player2,
       components: this.components,
     });
-    new Turn(this, background);
-    console.log(this.board1);
+    this.components.play = new Turn(this, background);
+  }
+
+  turn(board, index, game = this.components.play) {
+    if (board === "Player") {
+      console.log("Do computer stuff");
+      const hit = this.player1.move(index.x, index.y);
+      game._hitORmiss(index, hit, board);
+      const allShipsSunk = this.board1._areShipsSunk();
+      console.log(this.player1);
+      if (allShipsSunk === true) {
+        // print winner
+        // you lost
+        console.log("You lost");
+      }
+    } else if (board === "Computer") {
+      console.log("Do player stuff");
+      const hit = this.player2.move(index.x, index.y);
+      game._hitORmiss(index, hit, board);
+      const allShipsSunk = this.board2._areShipsSunk();
+      console.log(this.board2);
+      if (allShipsSunk === true) {
+        // print winner
+        // player
+        console.log("Player has won");
+      }
+    }
+    // check for the winner
   }
 }
 
