@@ -2,7 +2,7 @@ class Random {
   constructor(player) {
     this.player = player;
     this.init = this.init();
-    this.lastHit;
+    this.nextHit = 0;
   }
 
   init(player = this.player) {
@@ -75,7 +75,8 @@ class Random {
     }
   }
 
-  adjacentMove(lastHit) {
+  adjacentMove(lastHit, board) {
+    console.log(lastHit);
     let moves = [
       [1, 0],
       [0, 1],
@@ -87,12 +88,19 @@ class Random {
 
     for (let i = 0; i < moves.length; i++) {
       // check if move is valid
+      let nextX = x + Number(moves[i][0]);
+      let nextY = y + Number(moves[i][1]);
+      let nextMove = { x: nextX, y: nextY };
+      console.log(nextMove);
 
-      let nextMove = { x: x + moves[0], y: y + moves[1] };
-      const valid = this.isValidMove(nextMove);
-
-      if (valid === true) {
-        // hit
+      // check if next move will hit a ship
+      let validMove = this.isValidMove(nextMove, board);
+      if (validMove === true) {
+        // HARD MODE - might need to edit it
+        let checkBoard = board[nextMove.x][nextMove.y];
+        if (typeof checkBoard === "object") {
+          return (this.nextHit = nextMove);
+        }
       }
     }
   }
@@ -101,11 +109,13 @@ class Random {
     const move = board[index.x][index.y];
     const arr = [];
     if (move == "0") return true;
+    if (move == "x") return false;
     else if (typeof move === "object") {
       move.hits.forEach((hit) => {
         if (hit[0] == index.x && hit[1] == index.y) {
           arr.push(false);
         }
+        // look at board missed array and filter for index coords
       });
       if (arr.length == 0) {
         return true;

@@ -57,14 +57,27 @@ class Game {
   }
 
   computerTurn(board, index, game, computer) {
-    // fix selecting the same coords twice
+    let hit;
     index = computer.randomCoords();
-    const validMove = computer.isValidMove(index, this.board1.board);
-    console.log({ validMove, index });
+    let nextMove = computer.nextHit;
+    console.log(computer.nextHit);
+    let validMove = computer.isValidMove(index, this.board1.board);
     if (validMove === true) {
-      const hit = this.player1.move(index.x, index.y);
-      game._hitORmiss(index, hit, board);
-      console.log("hit");
+      if (nextMove != 0) {
+        hit = this.player1.move(nextMove.x, nextMove.y);
+        index = { x: nextMove.x, y: nextMove.y };
+        game._hitORmiss(index, hit, board);
+        computer.nextHit = 0;
+        console.log("hit");
+      } else {
+        hit = this.player1.move(index.x, index.y);
+        game._hitORmiss(index, hit, board);
+        console.log("hit");
+      }
+
+      if (hit == "hit") {
+        let nextMove = computer.adjacentMove(index, this.board1.board);
+      }
     } else {
       this.computerTurn(board, index, game, computer);
       //console.log(validMove)

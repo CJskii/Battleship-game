@@ -89,11 +89,9 @@ class Turn {
     else if (target == "miss") {
       board = this._findSquare(index, board);
       this._missColor(board);
-      // color
     } else if (target == "hit") {
       board = this._findSquare(index, board);
       this._hitColor(board);
-      // color
     }
     board.classList.remove("target");
     board.classList.add("not-allowed");
