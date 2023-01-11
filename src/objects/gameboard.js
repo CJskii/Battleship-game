@@ -72,7 +72,6 @@ class Gameboard {
       }
       // if no duplicates push to missed array
       else {
-        this.board[x][y] = "x";
         this.missed.push([x, y]); // push missed cords to miss array
         return "miss";
       }

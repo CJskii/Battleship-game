@@ -2,7 +2,7 @@ class Random {
   constructor(player) {
     this.player = player;
     this.init = this.init();
-    this.nextHit = 0;
+    this.lastHit = 0;
   }
 
   init(player = this.player) {
@@ -75,8 +75,7 @@ class Random {
     }
   }
 
-  adjacentMove(lastHit, board) {
-    console.log(lastHit);
+  adjacentMoves(lastHit, board) {
     let moves = [
       [1, 0],
       [0, 1],
@@ -85,42 +84,58 @@ class Random {
     ];
     const x = Number(lastHit.x);
     const y = Number(lastHit.y);
-
+    let validMove;
+    // check if those moves can be randomized instead of selecting in the same pattern
     for (let i = 0; i < moves.length; i++) {
-      // check if move is valid
+      // calculate next move coords
       let nextX = x + Number(moves[i][0]);
       let nextY = y + Number(moves[i][1]);
       let nextMove = { x: nextX, y: nextY };
-      console.log(nextMove);
-
-      // check if next move will hit a ship
-      let validMove = this.isValidMove(nextMove, board);
-      if (validMove === true) {
-        // HARD MODE - might need to edit it
-        let checkBoard = board[nextMove.x][nextMove.y];
-        if (typeof checkBoard === "object") {
-          return (this.nextHit = nextMove);
+      // check if move is within board
+      if (nextX >= 0 && nextX < 10 && nextY >= 0 && nextY < 10) {
+        // check if next move will hit a ship
+        validMove = this.isValidMove(nextMove, board);
+        console.log({ validMove, nextMove });
+        if (validMove === true) {
+          return nextMove; // not false
         }
       }
+    }
+    // if there's no valid adjacent move
+    if (validMove === false) {
+      // reset lastHit
+      this.lastHit = 0;
+      console.log("Reset last hit and get back to random moves");
+      // return false so computer can make callback on itself
+      return false;
     }
   }
 
   isValidMove(index, board) {
-    const move = board[index.x][index.y];
+    const move = board.board[index.x][index.y];
     const arr = [];
-    if (move == "0") return true;
-    if (move == "x") return false;
+    let missed = this.checkMissedArray(index, board);
+    if (missed === true) return false;
+    if (move == "0" && missed === false) return true;
     else if (typeof move === "object") {
       move.hits.forEach((hit) => {
         if (hit[0] == index.x && hit[1] == index.y) {
           arr.push(false);
         }
-        // look at board missed array and filter for index coords
       });
       if (arr.length == 0) {
         return true;
-      }
+      } else return false;
     }
+  }
+
+  checkMissedArray(index, board) {
+    const missedArray = board.missed;
+    const isMissed = missedArray.filter((coords) => {
+      return coords[0] == index.x && coords[1] == index.y;
+    });
+    if (isMissed.length == 0) return false;
+    else return true;
   }
 }
 

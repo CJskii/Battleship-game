@@ -57,36 +57,36 @@ class Game {
   }
 
   computerTurn(board, index, game, computer) {
-    let hit;
+    let lastHit = computer.lastHit;
     index = computer.randomCoords();
-    let nextMove = computer.nextHit;
-    console.log(computer.nextHit);
-    let validMove = computer.isValidMove(index, this.board1.board);
-    if (validMove === true) {
-      if (nextMove != 0) {
-        hit = this.player1.move(nextMove.x, nextMove.y);
-        index = { x: nextMove.x, y: nextMove.y };
-        game._hitORmiss(index, hit, board);
-        computer.nextHit = 0;
-        console.log("hit");
+    let validMove = computer.isValidMove(index, this.board1);
+    if (lastHit != 0) {
+      // Hit adjacent square
+      const nextMove = computer.adjacentMoves(lastHit, this.board1);
+      if (nextMove != false) {
+        // if next adjacent move is valid
+        this.computerHit(nextMove, board, game, computer);
       } else {
-        hit = this.player1.move(index.x, index.y);
-        game._hitORmiss(index, hit, board);
-        console.log("hit");
+        // if there's no valid adjacent moves call itself
+        this.computerTurn(board, index, game, computer);
       }
-
-      if (hit == "hit") {
-        let nextMove = computer.adjacentMove(index, this.board1.board);
-      }
+    } else if (validMove === true) {
+      // Hit random coords
+      this.computerHit(index, board, game, computer);
+      console.log("Hit in random coords");
     } else {
+      // Call itself to generate new random coords
       this.computerTurn(board, index, game, computer);
-      //console.log(validMove)
+      console.log("Generating new random coords");
     }
+  }
 
-    //console.log({ board, hit });
-    // if computer hits boat
-    // make it select coords next to last hit
-    //computer.lastHit(hit, index);
+  computerHit(index, board, game, computer) {
+    let hit = this.player1.move(index.x, index.y);
+    game._hitORmiss(index, hit, board);
+    if (hit == "hit") {
+      computer.lastHit = index;
+    }
   }
 
   printWinner(string, game = this.components.play) {
