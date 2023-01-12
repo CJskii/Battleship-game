@@ -37,29 +37,36 @@ class Game {
 
   turn(board, index, game = this.components.play, computer = this.computer) {
     if (board === "Player") {
-      console.log("Do computer stuff");
+      // logic for computer
       this.computerTurn(board, index, game, computer);
       const allShipsSunk = this.board1._areShipsSunk();
       if (allShipsSunk === true) {
+        // print winner and stop the game
         this.printWinner(board);
+        game.stopGame();
       }
     } else if (board === "Computer") {
-      console.log("Do player stuff");
+      // logic for player
       const hit = this.player2.move(index.x, index.y);
       game._hitORmiss(index, hit, board);
       const allShipsSunk = this.board2._areShipsSunk();
       if (allShipsSunk === true) {
+        // print winner and stop the game
         this.printWinner(board);
+        game.stopGame();
       } else {
+        // if all ships are not sunk - computer will make random move
         this.turn("Player", index);
       }
     }
   }
 
   computerTurn(board, index, game, computer) {
+    // get random index and check if it is valid
     let lastHit = computer.lastHit;
     index = computer.randomCoords();
     let validMove = computer.isValidMove(index, this.board1);
+    // if last hit wasn't miss - attempt to hit adjacent squares
     if (lastHit != 0) {
       // Hit adjacent square
       const nextMove = computer.adjacentMoves(lastHit, this.board1);
@@ -73,15 +80,14 @@ class Game {
     } else if (validMove === true) {
       // Hit random coords
       this.computerHit(index, board, game, computer);
-      console.log("Hit in random coords");
     } else {
-      // Call itself to generate new random coords
+      // if index is invalid call itself to generate new random coords
       this.computerTurn(board, index, game, computer);
-      console.log("Generating new random coords");
     }
   }
 
   computerHit(index, board, game, computer) {
+    // called when computer makes hit
     let hit = this.player1.move(index.x, index.y);
     game._hitORmiss(index, hit, board);
     if (hit == "hit") {

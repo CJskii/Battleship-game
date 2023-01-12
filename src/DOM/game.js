@@ -5,6 +5,7 @@ class Turn {
     this.header = this._renderHeader();
     this.board1 = this._renderBoard(game.player1);
     this.board2 = this._renderBoard(game.player2);
+    this.stop = false;
     this.init = this.init();
   }
 
@@ -12,7 +13,7 @@ class Turn {
     const player1 = game.board1.ships;
     const player2 = game.board2.ships;
     this._renderShips(board1, player1);
-    this._renderShips(board2, player2);
+    //this._renderShips(board2, player2);
   }
 
   _renderHeader(background = this.boards.container) {
@@ -115,7 +116,12 @@ class Turn {
     square.classList.add("hit");
   }
 
-  #squareClick(e, game = this.game) {
+  stopGame() {
+    this.stop = true;
+  }
+
+  #squareClick(e, game = this.game, stop = this.stop) {
+    if (stop === true) return;
     const board = e.path[1];
     const string = e.target.classList[0];
     const index = game.components._index(string);

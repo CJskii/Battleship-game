@@ -95,7 +95,6 @@ class Random {
       if (nextX >= 0 && nextX < 10 && nextY >= 0 && nextY < 10) {
         // check if next move will hit a ship
         validMove = this.isValidMove(nextMove, board);
-        console.log({ validMove, nextMove });
         if (validMove === true) {
           return nextMove; // not false
         }
