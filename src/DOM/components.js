@@ -70,6 +70,20 @@ class Components {
     return string;
   }
 
+  _animate(element, text) {
+    //const text = "Make a move captain...";
+    let index = 0;
+    const delay = 100;
+    const intervalId = setInterval(() => {
+      if (index < text.length) {
+        element.textContent += text[index];
+        index++;
+      } else {
+        clearInterval(intervalId);
+      }
+    }, delay);
+  }
+
   // Listeners
 
   #axisBtn(e, btn) {

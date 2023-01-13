@@ -21,7 +21,8 @@ class Turn {
     container.classList.add("header-wrapper");
     const header = document.createElement("h5");
     header.classList.add("header-turn");
-    header.textContent = "Make a move captain";
+    const text = "Make a move captain...";
+    this.game.components._animate(header, text);
     container.appendChild(header);
     background.appendChild(container);
     return container;
@@ -42,8 +43,10 @@ class Turn {
         const square = document.createElement("div");
         square.classList.add(`x${j}y${i}`);
         square.classList.add("square");
-        square.classList.add("target");
-        square.addEventListener("click", (e) => this.#squareClick(e));
+        if (player.name == "Computer") {
+          square.classList.add("target");
+          square.addEventListener("click", (e) => this.#squareClick(e));
+        }
         playerBoard.append(square);
       }
     }

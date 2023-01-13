@@ -2,8 +2,8 @@ import Game from "../index";
 
 class Form {
   constructor(background, components) {
-    this.form = this._nameForm(background);
     this.components = components;
+    this.form = this._nameForm(background);
   }
 
   _nameForm(background = this.background) {
@@ -12,10 +12,11 @@ class Form {
     const label = document.createElement("label");
     const input = document.createElement("input");
     const submit = document.createElement("button");
+    const text = "Enter player name:";
     input.id = "name";
     input.placeholder = "Captain name...";
     label.setAttribute("for", input);
-    label.textContent = "Enter player name:";
+    this.components._animate(label, text);
     submit.textContent = "Submit";
     submit.classList.add("btn");
     submit.addEventListener("click", (e) => this.#submitBtn(e, input));

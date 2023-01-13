@@ -23,6 +23,7 @@ class Boards {
   _render(player, container = this.container) {
     const playerBoard = document.createElement("div");
     playerBoard.classList.add("player-board");
+    container.append(playerBoard);
     for (let i = 0; i < player.board.size; i++) {
       for (let j = 0; j < player.board.size; j++) {
         const square = document.createElement("div");
@@ -35,7 +36,6 @@ class Boards {
         playerBoard.append(square);
       }
     }
-    container.append(playerBoard);
     return playerBoard;
   }
 
@@ -90,7 +90,6 @@ class Boards {
     this._shipPlaced(index, axis, ship.length);
     // if ships are empty - turn should start
     if (ships.length === 0) {
-      console.log("restart UI and start the turn");
       this._clear();
       // initiate rendering of both player boards
       components.game.start();

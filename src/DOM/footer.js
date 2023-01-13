@@ -1,5 +1,5 @@
 class Footer {
-  constructor(background) {
+  constructor(background, components) {
     this.footer = this._footer(background);
   }
   _footer(background = this.background) {
@@ -9,6 +9,7 @@ class Footer {
     const anchor = document.createElement("a");
     footer.classList.add("footer");
     paragraph.textContent = "Created by ";
+    paragraph.classList.add("footer-text");
     anchor.textContent = "CJski";
     anchor.target = "_blank";
     anchor.href = "https://github.com/CJskii/Battleship-game";

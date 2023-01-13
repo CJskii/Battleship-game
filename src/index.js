@@ -96,7 +96,9 @@ class Game {
   }
 
   printWinner(string, game = this.components.play) {
-    game.header.textContent = this.evaluateWinner(string);
+    const text = this.evaluateWinner(string);
+    game.header.textContent = "";
+    this.components._animate(game.header, text);
   }
 
   evaluateWinner(string) {
