@@ -66,10 +66,18 @@ body {
   font-size: 1.7rem;
   padding-top: 1rem;
   letter-spacing: 5px;
+  animation-name: slide-in-top, fade-in;
+  animation-duration: 1s, 2s;
+  animation-timing-function: ease-in-out, ease-out;
 }
 
 .captain-header {
   text-align: center;
+  font-size: 1.2rem;
+  color: var(--color-2);
+  letter-spacing: 2px;
+  animation: fade-in 4s;
+  word-break: break-all;
 }
 
 .header-wrapper {
@@ -81,12 +89,16 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--color-2);
 }
 
 .header-turn {
   text-align: center;
   color: var(--color-2);
   letter-spacing: 2px;
+  margin-right: 5px;
+  border-radius: 50%;
+  animation: typing 1s linear infinite;
 }
 
 /* BUTTONS */
@@ -106,6 +118,9 @@ body {
   padding: 6px 24px;
   text-decoration: none;
   text-shadow: 0px 1px 0px #cc9f52;
+  animation-name: slide-in-top, fade-in;
+  animation-duration: 3s, 3s;
+  animation-timing-function: ease-in-out, ease-out;
 }
 
 .btn:hover {
@@ -132,6 +147,9 @@ form {
 label {
   font-size: 1.2rem;
   color: var(--color-3);
+  animation-name: slide-in-top, fade-in;
+  animation-duration: 1s, 1s;
+  animation-timing-function: ease-in-out, ease-out;
 }
 
 input {
@@ -144,6 +162,9 @@ input {
   text-align: center;
   color: var(--color-3);
   border-radius: var(--border-radius);
+  animation-name: slide-in-top, fade-in;
+  animation-duration: 1s, 2s;
+  animation-timing-function: ease-in-out, ease-out;
 }
 
 input:focus {
@@ -152,7 +173,7 @@ input:focus {
 
 input::placeholder {
   text-align: center;
-  font-size: 0.5rem;
+  font-size: 1.2rem;
 }
 
 /* PLAYER BOARDS */
@@ -173,6 +194,9 @@ input::placeholder {
   grid-template-rows: repeat(10, 25px);
   gap: 2px;
   background-color: #00448848;
+  animation-name: slide-in, fade-in;
+  animation-duration: 1s, 2s;
+  animation-timing-function: ease-in-out, ease-out;
 }
 
 .square {
@@ -180,6 +204,8 @@ input::placeholder {
   height: 25px;
   border: 1px solid white;
   border-radius: 2px;
+  transition-duration: 1s;
+  transition: ease-in-out 0.3s;
 }
 
 .not-allowed {
@@ -196,8 +222,9 @@ input::placeholder {
 }
 
 .ship {
-  background-color: yellow;
+  background-color: rgba(0, 183, 255, 0.521);
   cursor: no-drop;
+  content: url(./img/patrol.svg);
 }
 
 .player-container {
@@ -211,6 +238,8 @@ input::placeholder {
   padding-bottom: 0.3rem;
   color: var(--color-3);
   letter-spacing: 2px;
+  font-size: 1rem;
+  animation: fade-in 4s;
 }
 
 .target {
@@ -241,10 +270,50 @@ input::placeholder {
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: fade-in 2s;
 }
 
 a {
   text-decoration: none;
   cursor: pointer;
-  color: black;
+  color: var(--color-4);
+}
+.footer-text {
+  color: var(--color-5);
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-top {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-bottom {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
 }
