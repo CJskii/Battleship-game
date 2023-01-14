@@ -31,10 +31,8 @@ class Turn {
   _renderBoard(player, background = this.boards.container) {
     const container = document.createElement("div");
     container.classList.add("player-container");
-    const playerName = document.createElement("h5");
-    playerName.classList.add("player-name");
-    playerName.textContent = `${player.name}'s board`;
-    container.append(playerName);
+    this._addPlayerName(player, container);
+    this._addShipCount(player, container);
     const playerBoard = document.createElement("div");
     playerBoard.classList.add("player-board");
     playerBoard.classList.add(`${player.name}`);
@@ -53,6 +51,27 @@ class Turn {
     container.append(playerBoard);
     background.append(container);
     return playerBoard;
+  }
+
+  _addPlayerName(player, container) {
+    const playerName = document.createElement("h5");
+    playerName.classList.add("player-name");
+    playerName.textContent = `${player.name}'s board`;
+    container.append(playerName);
+    return playerName;
+  }
+
+  _addShipCount(player, container) {
+    const shipStatus = document.createElement("span");
+    shipStatus.textContent = "Ships left: 5";
+    shipStatus.classList = "ship-status";
+    if (player.name == "Computer") {
+      shipStatus.classList = "computer-ships";
+    } else {
+      shipStatus.classList = "player-ships";
+    }
+    container.append(shipStatus);
+    return shipStatus;
   }
 
   _renderShips(board, ships) {
@@ -128,11 +147,9 @@ class Turn {
     const board = e.path[1];
     const string = e.target.classList[0];
     const index = game.components._index(string);
-    if (board.classList.contains("not-allowed")) return;
+    if (e.target.classList.contains("not-allowed")) return;
     else if (board.classList.contains("Computer")) {
       game.turn("Computer", index);
-    } else {
-      game.turn("Player", index);
     }
   }
 }

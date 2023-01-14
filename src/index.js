@@ -59,6 +59,7 @@ class Game {
         this.turn("Player", index);
       }
     }
+    this.updateShipCount();
   }
 
   computerTurn(board, index, game, computer) {
@@ -93,6 +94,21 @@ class Game {
     if (hit == "hit") {
       computer.lastHit = index;
     }
+  }
+
+  updateShipCount() {
+    const player1 = document.querySelector(".player-ships");
+    const player2 = document.querySelector(".computer-ships");
+    player1.textContent = `Ships left: ${this.checkShips(this.board1)}`;
+    player2.textContent = `Ships left: ${this.checkShips(this.board2)}`;
+  }
+
+  checkShips(board) {
+    const ships = board.ships;
+    const arr = ships.filter((ship) => {
+      return ship.sunk === false;
+    });
+    return arr.length;
   }
 
   printWinner(string, game = this.components.play) {
