@@ -193,10 +193,13 @@ input::placeholder {
   grid-template-columns: repeat(10, 25px);
   grid-template-rows: repeat(10, 25px);
   gap: 2px;
+  width: 100%;
+  height: 100%;
   background-color: #00448848;
   animation-name: slide-in, fade-in;
   animation-duration: 1s, 2s;
   animation-timing-function: ease-in-out, ease-out;
+  justify-self: center;
 }
 
 .square {
@@ -238,6 +241,7 @@ span {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  justify-self: center;
 }
 
 .player-name {
@@ -270,7 +274,7 @@ span {
 .footer {
   font-size: 0.6rem;
   text-align: center;
-  background-color: #c6b1d646;
+  background-color: #c6b1d67e;
   width: 100%;
   height: 5vh;
   display: flex;
@@ -282,6 +286,10 @@ span {
 a {
   text-decoration: none;
   cursor: pointer;
+  color: var(--color-6);
+}
+
+a:hover {
   color: var(--color-4);
 }
 .footer-text {
@@ -321,5 +329,74 @@ a {
   }
   to {
     transform: translateY(-100%);
+  }
+}
+
+/* MEDIA QUERY */
+
+@media (min-width: 425px) {
+  .player-board {
+    display: grid;
+    grid-template-columns: repeat(10, 35px);
+    grid-template-rows: repeat(10, 35px);
+  }
+
+  .square {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media (min-width: 768px) {
+  .player-board {
+    display: grid;
+    grid-template-columns: repeat(10, 25px);
+    grid-template-rows: repeat(10, 25px);
+    width: fit-content;
+  }
+
+  .board-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: 1/ -1;
+  }
+
+  .square {
+    width: 25px;
+    height: 25px;
+  }
+
+  .boards-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .header-wrapper {
+    grid-area: 1 / 1 / 2/ 3;
+  }
+  .captain-header {
+    grid-area: 1/ 1 / 2 / 3;
+  }
+
+  .btn {
+    grid-area: 2 / 1 / 3 / 3;
+  }
+}
+
+@media (max-width: 426px) {
+  .wrapper {
+    background-color: rgba(0, 0, 0, 0.804);
+  }
+}
+
+@media (max-width: 324px) {
+  .wrapper {
+    display: none;
+  }
+
+  body {
+    background: black;
   }
 }

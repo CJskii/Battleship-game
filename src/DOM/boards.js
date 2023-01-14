@@ -21,9 +21,12 @@ class Boards {
   }
 
   _render(player, container = this.container) {
+    const boardWrapper = document.createElement("div");
+    boardWrapper.classList.add("board-wrapper");
     const playerBoard = document.createElement("div");
     playerBoard.classList.add("player-board");
-    container.append(playerBoard);
+    boardWrapper.append(playerBoard);
+    container.append(boardWrapper);
     for (let i = 0; i < player.board.size; i++) {
       for (let j = 0; j < player.board.size; j++) {
         const square = document.createElement("div");

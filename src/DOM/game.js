@@ -144,7 +144,7 @@ class Turn {
 
   #squareClick(e, game = this.game, stop = this.stop) {
     if (stop === true) return;
-    const board = e.path[1];
+    const board = e.target.parentElement;
     const string = e.target.classList[0];
     const index = game.components._index(string);
     if (e.target.classList.contains("not-allowed")) return;
