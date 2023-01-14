@@ -25,7 +25,7 @@ class Turn {
     this.game.components._animate(header, text);
     container.appendChild(header);
     background.appendChild(container);
-    return container;
+    return header;
   }
 
   _renderBoard(player, background = this.boards.container) {

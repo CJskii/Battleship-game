@@ -70,8 +70,40 @@ class Components {
     return string;
   }
 
+  updateShipCount(game = this.game) {
+    const player1 = document.querySelector(".player-ships");
+    const player2 = document.querySelector(".computer-ships");
+    player1.textContent = `Ships left: ${this.checkShips(game.board1)}`;
+    player2.textContent = `Ships left: ${this.checkShips(game.board2)}`;
+  }
+
+  checkShips(board) {
+    const ships = board.ships;
+    const arr = ships.filter((ship) => {
+      return ship.sunk === false;
+    });
+    return arr.length;
+  }
+
+  updateShipContent(game = this.game) {
+    const ships = game.player2.board.ships;
+    ships.forEach((ship) => {
+      if (ship.sunk === true) {
+        for (let i = 0; i < ship.index.length; i++) {
+          let index = ship.index[i];
+          index = { x: index[0], y: index[1] };
+          const squares = document.querySelectorAll(`.x${index.x}y${index.y}`);
+          if (!squares[1].classList.contains("ship")) {
+            setTimeout(() => {
+              squares[1].classList.add("ship");
+            }, 500);
+          }
+        }
+      }
+    });
+  }
+
   _animate(element, text) {
-    //const text = "Make a move captain...";
     let index = 0;
     const delay = 100;
     const intervalId = setInterval(() => {

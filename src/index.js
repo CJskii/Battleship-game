@@ -50,6 +50,7 @@ class Game {
       const hit = this.player2.move(index.x, index.y);
       game._hitORmiss(index, hit, board);
       const allShipsSunk = this.board2._areShipsSunk();
+      this.components.updateShipContent();
       if (allShipsSunk === true) {
         // print winner and stop the game
         this.printWinner(board);
@@ -59,7 +60,7 @@ class Game {
         this.turn("Player", index);
       }
     }
-    this.updateShipCount();
+    this.components.updateShipCount();
   }
 
   computerTurn(board, index, game, computer) {
@@ -88,27 +89,13 @@ class Game {
   }
 
   computerHit(index, board, game, computer) {
-    // called when computer makes hit
-    let hit = this.player1.move(index.x, index.y);
-    game._hitORmiss(index, hit, board);
-    if (hit == "hit") {
-      computer.lastHit = index;
-    }
-  }
-
-  updateShipCount() {
-    const player1 = document.querySelector(".player-ships");
-    const player2 = document.querySelector(".computer-ships");
-    player1.textContent = `Ships left: ${this.checkShips(this.board1)}`;
-    player2.textContent = `Ships left: ${this.checkShips(this.board2)}`;
-  }
-
-  checkShips(board) {
-    const ships = board.ships;
-    const arr = ships.filter((ship) => {
-      return ship.sunk === false;
-    });
-    return arr.length;
+    setTimeout(() => {
+      let hit = this.player1.move(index.x, index.y);
+      game._hitORmiss(index, hit, board);
+      if (hit == "hit") {
+        computer.lastHit = index;
+      }
+    }, 500);
   }
 
   printWinner(string, game = this.components.play) {
