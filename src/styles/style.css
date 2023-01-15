@@ -63,7 +63,7 @@ body {
 .game-title {
   color: var(--color-4);
   text-align: center;
-  font-size: 1.7rem;
+  font-size: 2.5rem;
   padding-top: 1rem;
   letter-spacing: 5px;
   animation-name: slide-in-top, fade-in;
@@ -90,6 +90,7 @@ body {
   justify-content: center;
   align-items: center;
   color: var(--color-2);
+  font-family: Press-start;
 }
 
 .header-turn {
@@ -150,6 +151,7 @@ label {
   animation-name: slide-in-top, fade-in;
   animation-duration: 1s, 1s;
   animation-timing-function: ease-in-out, ease-out;
+  font-family: Press-start;
 }
 
 input {
@@ -192,10 +194,14 @@ input::placeholder {
   display: grid;
   grid-template-columns: repeat(10, 25px);
   grid-template-rows: repeat(10, 25px);
-  gap: 2px;
+  gap: 3px;
   width: 100%;
   height: 100%;
-  background-color: #00448848;
+  background: #00448848;
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10.1px);
+  -webkit-backdrop-filter: blur(10.1px);
   animation-name: slide-in, fade-in;
   animation-duration: 1s, 2s;
   animation-timing-function: ease-in-out, ease-out;
@@ -205,7 +211,7 @@ input::placeholder {
 .square {
   width: 25px;
   height: 25px;
-  border: 1px solid white;
+  border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 2px;
   transition-duration: 1s;
   transition: ease-in-out 0.3s;
@@ -281,6 +287,12 @@ span {
   justify-content: center;
   align-items: center;
   animation: fade-in 2s;
+  font-family: Press-start;
+  background: #00448816;
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10.1px);
+  -webkit-backdrop-filter: blur(10.1px);
 }
 
 a {
@@ -334,7 +346,23 @@ a:hover {
 
 /* MEDIA QUERY */
 
-@media (min-width: 425px) {
+@media (max-width: 426px) {
+  .wrapper {
+    background-color: rgba(0, 0, 0, 0.804);
+  }
+}
+
+@media (max-width: 319px) {
+  .wrapper {
+    display: none;
+  }
+
+  body {
+    background: black;
+  }
+}
+
+@media (max-width: 426px) {
   .player-board {
     display: grid;
     grid-template-columns: repeat(10, 35px);
@@ -344,6 +372,36 @@ a:hover {
   .square {
     width: 35px;
     height: 35px;
+  }
+
+  .game-title {
+    font-size: 1.6rem;
+  }
+
+  .captain-header {
+    font-size: 1rem;
+  }
+
+  label {
+    font-size: 1rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 376px) {
+  .player-board {
+    display: grid;
+    grid-template-columns: repeat(10, 25px);
+    grid-template-rows: repeat(10, 25px);
+  }
+
+  .square {
+    width: 25px;
+    height: 25px;
+  }
+
+  .game-title {
+    font-size: 1.5rem;
   }
 }
 
@@ -383,20 +441,110 @@ a:hover {
   .btn {
     grid-area: 2 / 1 / 3 / 3;
   }
-}
 
-@media (max-width: 426px) {
-  .wrapper {
-    background-color: rgba(0, 0, 0, 0.804);
+  input {
+    width: 70%;
   }
 }
 
-@media (max-width: 324px) {
-  .wrapper {
-    display: none;
+@media (min-width: 1024px) {
+  .player-board {
+    display: grid;
+    grid-template-columns: repeat(10, 35px);
+    grid-template-rows: repeat(10, 35px);
+    width: fit-content;
   }
 
-  body {
-    background: black;
+  .square {
+    width: 35px;
+    height: 35px;
+  }
+
+  .boards-container {
+    gap: 25px;
+  }
+
+  input {
+    width: 50%;
+  }
+
+  .footer {
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .player-board {
+    display: grid;
+    grid-template-columns: repeat(10, 45px);
+    grid-template-rows: repeat(10, 45px);
+    width: fit-content;
+  }
+
+  .square {
+    width: 45px;
+    height: 45px;
+  }
+
+  .captain-header {
+    font-size: 1.5rem;
+  }
+
+  .player-name {
+    font-size: 1.5rem;
+  }
+
+  span {
+    font-size: 1.3rem;
+  }
+
+  .header-turn {
+    font-size: 1.3rem;
+  }
+}
+
+@media (min-width: 2560px) {
+  .game-title {
+    font-size: 5rem;
+  }
+
+  label,
+  input,
+  input::placeholder,
+  .captain-header {
+    font-size: 3rem;
+  }
+
+  .btn {
+    font-size: 2rem;
+    padding: 1rem;
+  }
+
+  .footer {
+    font-size: 2.5rem;
+  }
+  .player-board {
+    display: grid;
+    grid-template-columns: repeat(10, 70px);
+    grid-template-rows: repeat(10, 70px);
+    width: fit-content;
+    gap: 7px;
+  }
+
+  .square {
+    width: 70px;
+    height: 70px;
+  }
+
+  .player-name {
+    font-size: 2.8rem;
+  }
+
+  span {
+    font-size: 2.2rem;
+  }
+
+  .header-turn {
+    font-size: 2.6rem;
   }
 }

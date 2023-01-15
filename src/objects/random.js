@@ -8,14 +8,13 @@ class Random {
   init(player = this.player) {
     const ship = player.ships.shift();
     const axis = this.randomAxis();
-    if (!ship) return console.log("Computer ships placed");
+    if (!ship) return;
     this.placeShipRandom(ship, axis);
   }
 
   placeShipRandom(ship, axis) {
     const index = this.randomCoords();
     const isValidMove = this._isValidMove(ship, axis, index);
-
     if (isValidMove === false) {
       // generate new coords
       this.placeShipRandom(ship, axis);
@@ -32,7 +31,6 @@ class Random {
     let arr = [];
     const x = Number(index.x);
     const y = Number(index.y);
-
     for (let i = 0; i < length; i++) {
       if (axis == "X") {
         const square = this._square([x + i], [y], board);
@@ -46,7 +44,6 @@ class Random {
         }
       }
     }
-
     if (arr.length == 0) return true;
     else return false;
   }
@@ -104,7 +101,6 @@ class Random {
     if (validMove === false) {
       // reset lastHit
       this.lastHit = 0;
-      console.log("Reset last hit and get back to random moves");
       // return false so computer can make callback on itself
       return false;
     }
