@@ -94,6 +94,9 @@ class Game {
       game._hitORmiss(index, hit, board);
       if (hit == "hit") {
         computer.lastHit = index;
+        computer.missed = false;
+      } else {
+        computer.missed = true;
       }
     }, 500);
   }

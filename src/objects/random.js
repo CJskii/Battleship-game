@@ -3,6 +3,7 @@ class Random {
     this.player = player;
     this.init = this.init();
     this.lastHit = 0;
+    this.missed;
   }
 
   init(player = this.player) {
@@ -82,28 +83,82 @@ class Random {
     const x = Number(lastHit.x);
     const y = Number(lastHit.y);
     let validMove;
-    // check if those moves can be randomized instead of selecting in the same pattern
-    for (let i = 0; i < moves.length; i++) {
-      // calculate next move coords
-      let nextX = x + Number(moves[i][0]);
-      let nextY = y + Number(moves[i][1]);
-      let nextMove = { x: nextX, y: nextY };
-      // check if move is within board
-      if (nextX >= 0 && nextX < 10 && nextY >= 0 && nextY < 10) {
-        // check if next move will hit a ship
-        validMove = this.isValidMove(nextMove, board);
-        if (validMove === true) {
-          return nextMove; // not false
+    const object = board.board[x][y];
+    console.log(object);
+    this.compareHits(object);
+    if (object.sunk === true) {
+      this.lastHit = 0;
+      return false;
+    } else if (this.missed === true) {
+      // calculate the next move here
+      console.log("estimate next move");
+    } else {
+      // check if those moves can be randomized instead of selecting in the same pattern
+      for (let i = 0; i < moves.length; i++) {
+        // calculate next move coords
+        let nextX = x + Number(moves[i][0]);
+        let nextY = y + Number(moves[i][1]);
+        let nextMove = { x: nextX, y: nextY };
+        // check if move is within board
+        if (nextX >= 0 && nextX < 10 && nextY >= 0 && nextY < 10) {
+          // check if next move will hit a ship
+          validMove = this.isValidMove(nextMove, board);
+          if (validMove === true) {
+            return nextMove; // not false
+          }
+        }
+      }
+      // if there's no valid adjacent move
+      if (validMove === false) {
+        // put a logic for checking the first hit and go in different direction
+        if (object.sunk === false) {
+          console.log("change direction");
+          return this.changeDirection(object);
+        } else {
+          // reset lastHit
+          this.lastHit = 0;
+          // return false so computer can make callback on itself
+          return false;
         }
       }
     }
-    // if there's no valid adjacent move
-    if (validMove === false) {
-      // reset lastHit
-      this.lastHit = 0;
-      // return false so computer can make callback on itself
-      return false;
+  }
+
+  compareHits(object) {
+    const length = object.hits.length;
+    if (length >= 2) {
+      let previousHit = object.hits[length - 2];
+      previousHit = { x: previousHit[0], y: previousHit[1] };
+      const lastHit = this.lastHit;
+      const missed = this.missed;
+      console.log({ lastHit, previousHit, missed });
     }
+  }
+
+  changeDirection(object) {
+    let firstHit = object.hits[0];
+    let secondHit = object.hits[1];
+    firstHit = { x: firstHit[0], y: firstHit[1] };
+    secondHit = { x: secondHit[0], y: secondHit[1] };
+    let nextMove;
+    if (firstHit.x === secondHit.x) {
+      // it move up or down
+      console.log("move up or down");
+      if (firstHit.y < secondHit.y) {
+        nextMove = { x: firstHit.x, y: firstHit.y - 1 };
+      } else {
+        nextMove = { x: firstHit.x, y: firstHit.y + 1 };
+      }
+    } else if (firstHit.y === secondHit.y) {
+      // it move left or right
+      console.log("move left or right");
+      if (firstHit.x < secondHit.x) {
+        nextMove = { x: firstHit.x - 1, y: firstHit.y };
+      } else {
+        nextMove = { x: firstHit.x + 1, y: firstHit.y };
+      }
+    }
+    return nextMove;
   }
 
   isValidMove(index, board) {

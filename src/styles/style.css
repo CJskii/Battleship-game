@@ -450,14 +450,14 @@ a:hover {
 @media (min-width: 1024px) {
   .player-board {
     display: grid;
-    grid-template-columns: repeat(10, 35px);
-    grid-template-rows: repeat(10, 35px);
+    grid-template-columns: repeat(10, 25px);
+    grid-template-rows: repeat(10, 25px);
     width: fit-content;
   }
 
   .square {
-    width: 35px;
-    height: 35px;
+    width: 25px;
+    height: 25px;
   }
 
   .boards-container {
