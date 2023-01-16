@@ -27,11 +27,6 @@ class Game {
   }
 
   start(background = this.components.boards) {
-    console.log({
-      Player1: this.player1,
-      Player2: this.player2,
-      components: this.components,
-    });
     this.components.play = new Turn(this, background);
   }
 
