@@ -44,4 +44,4 @@ Below instructions will get you a copy of the project up and running on your loc
 ## Authors
 
 - **Github** - [CJskii](https://github.com/CJskii)
-  [![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/)
+  [![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/cjski_web3)
